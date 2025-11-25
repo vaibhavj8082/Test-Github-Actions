@@ -3,6 +3,7 @@ name: Build and Push Nginx Image
 on: 
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   push:
