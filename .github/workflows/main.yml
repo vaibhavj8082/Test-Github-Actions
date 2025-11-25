@@ -1,0 +1,21 @@
+name: Build and Push Nginx Image
+
+on: 
+  push:
+    branches: [ "main" ]
+
+jobs:
+  push:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secret.DOCKERHUB_TOKEN }}" | docker login -u "${{ secret.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Build image
+      run: docker build -t ${{ secret.DOCKERHUB_USERNAME }}/nginx:latest .
+
+    - name: Push image
+      run: docker push ${{ secret.DOCKERHUB_USERNAME }}/nginx-app:latest
